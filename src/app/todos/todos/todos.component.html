@@ -1,0 +1,12 @@
+<div>
+  <input type="text" [formControl]="title" placeholder="Task Title" />
+  <button (click)="addTodo()">Add</button>
+</div>
+<div>
+  <label>
+    <input type="checkbox" id="showData" [formControl]="showData" />
+    <label for="showData">Show Data</label>
+  </label>
+</div>
+<pre *ngIf="showData.value">{{ todos | json }}</pre>
+<app-todo *ngFor="let todo of todos" [todo]="todo" (remove)="remove.emit($event)" (completed)="completed.emit($event)"></app-todo>

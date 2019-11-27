@@ -21,6 +21,7 @@
     "@angular/router": "~8.2.13",
     "@datorama/akita": "^4.14.1",
     "@datorama/akita-ng-entity-service": "^1.0.0",
+    "ngx-take-until-destroy": "^5.4.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
@@ -47,5 +48,8 @@
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
     "typescript": "~3.5.3"
+  },
+  "akitaCli": {
+    "template": "angular"
   }
 }

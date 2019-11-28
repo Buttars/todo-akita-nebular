@@ -1,0 +1,3 @@
+<nb-select [formControl]="control" hero [status]="filterStatus$ | async" >
+  <nb-option *ngFor="let filter of filters" [value]="filter.value">{{ filter.label }}</nb-option>
+</nb-select>

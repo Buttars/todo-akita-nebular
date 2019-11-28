@@ -2,3 +2,10 @@ nb-card {
   max-width: 500px;
   width: 100%;
 }
+
+.inputs {
+  margin-bottom: .5rem;
+  & > input {
+    margin-right: .3rem;
+  }
+}

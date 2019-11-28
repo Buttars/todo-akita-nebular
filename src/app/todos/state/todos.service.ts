@@ -4,6 +4,7 @@ import { ID } from '@datorama/akita';
 
 import { TodosStore } from './todos.store';
 import { createTodo, Todo } from './todo.model';
+import { VISIBILITY_FILTER } from '../filter/filter.model';
 
 @Injectable({ providedIn: 'root' })
 export class TodosService {
@@ -19,5 +20,13 @@ export class TodosService {
 
   completed = ({ id, completed }: Todo) => {
     this.todosStore.update(id, { completed });
+  };
+
+  updateFilter = (filter: VISIBILITY_FILTER) => {
+    this.todosStore.update({
+      ui: {
+        filter
+      }
+    });
   };
 }

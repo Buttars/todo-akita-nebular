@@ -1,12 +1,20 @@
 <div>
-  <input type="text" [formControl]="title" placeholder="Task Title" />
-  <button (click)="addTodo()">Add</button>
+  <input type="text" [formControl]="title" placeholder="Task Title" nbInput />
+  <button (click)="addTodo()" nbButton>Add</button>
 </div>
-<div>
-  <label>
-    <input type="checkbox" id="showData" [formControl]="showData" />
-    <label for="showData">Show Data</label>
-  </label>
+
+<div class="flex space-between">
+  <nb-card size="small">
+    <nb-card-header class="flex space-between text-align-center align-items-center">
+      <span>Todos</span>
+      <nb-checkbox [formControl]="showData">Show Data</nb-checkbox>
+    </nb-card-header>
+    <nb-list>
+      <nb-list-item *ngFor="let todo of todos">
+        <app-todo [todo]="todo" (remove)="remove.emit($event)" (completed)="completed.emit($event)"></app-todo>
+      </nb-list-item>
+    </nb-list>
+  </nb-card>
+
+  <pre *ngIf="showData.value">{{ todos | json }}</pre>
 </div>
-<pre *ngIf="showData.value">{{ todos | json }}</pre>
-<app-todo *ngFor="let todo of todos" [todo]="todo" (remove)="remove.emit($event)" (completed)="completed.emit($event)"></app-todo>

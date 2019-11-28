@@ -1,9 +1,4 @@
-<div class="flex padding">
-  <div class="flex">
-    <label>
-      <input type="checkbox" [formControl]="control"/>
-    </label>
-    <p>{{todo.title}}</p>
-    <p (click)="remove.emit(todo.id)">Remove</p>
-  </div>
+<div class="flex space-between">
+  <nb-checkbox [formControl]="control">{{ todo.title }}</nb-checkbox>
+  <nb-icon icon="trash-outline" (click)="remove.emit(todo.id)"></nb-icon>
 </div>

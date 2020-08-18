@@ -1,13 +1,15 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
+import { Todo } from '../state';
+
 @Component({
   selector: 'app-todos',
   templateUrl: './todos.component.html',
-  styleUrls: ['./todos.component.scss']
+  styleUrls: ['./todos.component.scss'],
 })
 export class TodosComponent implements OnInit {
-  @Input() todos;
+  @Input() todos: Array<Todo>;
   @Output() add = new EventEmitter();
   @Output() remove = new EventEmitter();
   @Output() completed = new EventEmitter();

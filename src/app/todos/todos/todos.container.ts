@@ -17,8 +17,8 @@ import { VISIBILITY_FILTER, initialFilters } from '../filter/filter.model';
       app-filter {
         margin-bottom: 0.5rem;
       }
-    `
-  ]
+    `,
+  ],
 })
 export class TodosContainer implements OnInit {
   todos$;

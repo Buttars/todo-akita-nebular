@@ -10,9 +10,11 @@ import { Todo } from '../state';
 })
 export class TodosComponent implements OnInit {
   @Input() todos: Array<Todo>;
+  @Input() filter: string;
   @Output() add = new EventEmitter();
   @Output() remove = new EventEmitter();
   @Output() completed = new EventEmitter();
+  @Output() changed = new EventEmitter();
 
   title = new FormControl();
   showData = new FormControl();

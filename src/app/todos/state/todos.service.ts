@@ -22,11 +22,15 @@ export class TodosService {
     this.todosStore.update(id, { completed });
   };
 
+  update = ({ id, title }: { id: ID; title: string }) => {
+    this.todosStore.update(id, { title });
+  };
+
   updateFilter = (filter: VISIBILITY_FILTER) => {
     this.todosStore.update({
       ui: {
-        filter
-      }
+        filter,
+      },
     });
   };
 }

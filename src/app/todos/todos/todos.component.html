@@ -5,16 +5,26 @@
 
 <div class="flex space-between">
   <nb-card size="small">
-    <nb-card-header class="flex space-between text-align-center align-items-center">
+    <nb-card-header
+      class="flex space-between text-align-center align-items-center"
+    >
       <span>Todos</span>
       <nb-checkbox [formControl]="showData">Show Data</nb-checkbox>
     </nb-card-header>
     <nb-list>
       <nb-list-item *ngFor="let todo of todos">
-        <app-todo [todo]="todo" (remove)="remove.emit($event)" (completed)="completed.emit($event)"></app-todo>
+        <app-todo
+          [todo]="todo"
+          (remove)="remove.emit($event)"
+          (completed)="completed.emit($event)"
+          (changed)="changed.emit($event)"
+        ></app-todo>
       </nb-list-item>
     </nb-list>
   </nb-card>
 
-  <pre *ngIf="showData.value">{{ todos | json }}</pre>
+  <section *ngIf="showData.value">
+    <pre>{{ filter | json }}</pre>
+    <pre>{{ todos | json }}</pre>
+  </section>
 </div>

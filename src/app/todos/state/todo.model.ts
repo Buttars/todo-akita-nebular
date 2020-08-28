@@ -10,6 +10,6 @@ export const createTodo = (title: string) => {
   return {
     id: guid(),
     title,
-    completed: false
-  } as Todo;
+    completed: false,
+  };
 };

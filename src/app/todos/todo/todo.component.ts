@@ -1,34 +1,91 @@
-import { Component, OnInit, ChangeDetectionStrategy, EventEmitter, Output, Input, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  EventEmitter,
+  Output,
+  Input,
+  OnDestroy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
+
+import { filter } from 'rxjs/operators';
 
 import { ID } from '@datorama/akita';
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
 
 import { Todo } from '../state';
+import { NbMenuService } from '@nebular/theme';
 
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodoComponent implements OnInit, OnDestroy {
   @Input() todo: Todo;
   @Output() completed = new EventEmitter<Todo>();
   @Output() remove = new EventEmitter<ID>();
+  @Output() changed = new EventEmitter<{ id: ID; title: string }>();
 
-  control: FormControl;
+  checkboxControl: FormControl;
+  inputControl: FormControl;
+  editing = false;
 
-  constructor() {}
+  options = [
+    {
+      title: 'Edit',
+      icon: 'edit-outline',
+      data: {
+        action: () => {
+          this.editing = true;
+          this.cd.detectChanges();
+        },
+      },
+    },
+    {
+      title: 'Remove',
+      icon: 'trash-outline',
+    },
+  ];
+
+  constructor(
+    private nbMenuService: NbMenuService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-    this.control = new FormControl(this.todo.completed);
+    this.checkboxControl = new FormControl(this.todo.completed);
+    this.inputControl = new FormControl(this.todo.title);
 
-    this.control.valueChanges.pipe(untilDestroyed(this)).subscribe((completed: boolean) => {
-      this.completed.emit({ ...this.todo, completed });
-    });
+    this.checkboxControl.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe((completed: boolean) => {
+        this.completed.emit({ ...this.todo, completed });
+      });
+
+    this.nbMenuService
+      .onItemClick()
+      .pipe(
+        filter(({ tag }) => tag === `todo-options-${this.todo.id.toString()}`)
+      )
+      .subscribe((option) => {
+        const action = option.item.data?.action;
+        if (!action) {
+          return;
+        }
+
+        option.item.data.action();
+      });
   }
 
   ngOnDestroy() {}
+
+  completeEditing = () => {
+    this.changed.emit({ id: this.todo.id, title: this.inputControl.value });
+    this.editing = false;
+  };
 }

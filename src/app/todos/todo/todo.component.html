@@ -1,4 +1,28 @@
 <div class="flex space-between">
-  <nb-checkbox [formControl]="control">{{ todo.title }}</nb-checkbox>
-  <nb-icon icon="trash-outline" (click)="remove.emit(todo.id)"></nb-icon>
+  <ng-container *ngIf="!editing">
+    <nb-checkbox [formControl]="checkboxControl">
+      {{ todo.title }}
+    </nb-checkbox>
+
+    <nb-icon
+      *ngIf="!editing"
+      icon="more-vertical-outline"
+      [nbContextMenuTag]="'todo-options-' + todo.id.toString()"
+      [nbContextMenu]="options"
+    ></nb-icon
+  ></ng-container>
+
+  <ng-container *ngIf="editing">
+    <section>
+      <input
+        nbInput
+        [formControl]="inputControl"
+        status="basic"
+        placeholder="Title"
+      />
+      <button nbButton ghost status="primary" (click)="completeEditing()">
+        <nb-icon icon="checkmark-outline"></nb-icon>
+      </button>
+    </section>
+  </ng-container>
 </div>

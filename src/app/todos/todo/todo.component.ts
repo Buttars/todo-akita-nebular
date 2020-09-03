@@ -49,6 +49,11 @@ export class TodoComponent implements OnInit, OnDestroy {
     {
       title: 'Remove',
       icon: 'trash-outline',
+      data: {
+        action: () => {
+          this.remove.emit(this.todo.id);
+        },
+      },
     },
   ];
 
